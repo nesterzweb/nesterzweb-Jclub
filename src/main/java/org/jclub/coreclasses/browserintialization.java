@@ -5,6 +5,7 @@ package org.jclub.coreclasses;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.openqa.selenium.By;
@@ -20,6 +21,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 
 
 
@@ -81,7 +83,11 @@ public class browserintialization {
 				getHighlightElement(driver.findElement(by));
 				driver.findElement(by).click();
 			}
-			
+				public void click(WebElement  element){
+				
+				getHighlightElement(element);
+				element.click();
+			}
 			public void sendkeys(By by,String keys){
 				getHighlightElement(driver.findElement(by));
 				driver.findElement(by).sendKeys(keys);
@@ -118,7 +124,7 @@ public class browserintialization {
 			
 			public boolean isDisplayed(By by){
 				
-				//getHighlightElement(driver.findElement(by));
+				getHighlightElement(driver.findElement(by));
 				return driver.findElement(by).isDisplayed();
 				
 			}
@@ -148,6 +154,40 @@ public class browserintialization {
 				
 				return driver.getCurrentUrl();
 			}
+			
+			public List getelementlist(By by){
+			
+				List <WebElement> product = driver.findElements(by);
+				return product;		
+			}
+			
+			public String getAttribute(By by, String attribute) throws IOException
+			{
+				try
+				{
+					
+					getHighlightElement(driver.findElement(by));
+					return driver.findElement(by).getAttribute(attribute).trim();
+				}
+				catch (NoSuchElementException e)
+				{
+					try
+					{
+						WebElement element = driver.findElement(by);
+						getHighlightElement(element);
+						((JavascriptExecutor) driver).executeScript("window.scrollTo(" + element.getLocation().x + "," + element.getLocation().y + ")");
+						((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
+						return driver.findElement(by).getAttribute(attribute).trim();
+					}
+					catch (Exception e2)
+					{
+						// logger.info(e.getMessage());
+						Assert.assertTrue(false, "Fail to get text value from : " + by + " on page : " + e.getMessage());
+					}
+				}
+				return null;
+			}
+			
 	}
 	
 	
