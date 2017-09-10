@@ -3,11 +3,11 @@
 <suite guice-stage="DEVELOPMENT" name="Failed suite [Default suite]">
   <test name="Default test(failed)">
     <classes>
-      <class name="org.jclub.product.verification.product_page_verifcation">
+      <class name="org.jclub.product.verification.product_page_verifcation_pate_category">
         <methods>
           <include name="productdetailvarification"/>
         </methods>
-      </class> <!-- org.jclub.product.verification.product_page_verifcation -->
+      </class> <!-- org.jclub.product.verification.product_page_verifcation_pate_category -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

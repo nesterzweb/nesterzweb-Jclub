@@ -25,7 +25,7 @@
 		
 		<!-- The next dependency is selenium webdriver need for GUI Testing -->
 		
-		<dependency>
+	<dependency>
         	<groupId>org.seleniumhq.selenium</groupId>
         	<artifactId>selenium-java</artifactId>
         	<version>3.4.0</version>
@@ -35,14 +35,55 @@
 		<!-- The next dependency is for testing framework testng -->
 	
 		<dependency>
-    		<groupId>org.testng</groupId>
-    		<artifactId>testng</artifactId>
-    		<version>6.11</version>
-    		<scope>test</scope>
+    			<groupId>org.testng</groupId>
+    			<artifactId>testng</artifactId>
+    			<version>6.11</version>
+    			<scope>test</scope>
+		</dependency>
+		
+		<!-- The next dependency is for log the output in loggger file -->
+		<dependency>
+    			<groupId>log4j</groupId>
+    			<artifactId>log4j</artifactId>
+    			<version>1.2.17</version>
+        </dependency>
+		
+
+	<!-- The next dependency is for reportng to generate html reprot -->
+		<dependency>
+    			<groupId>org.uncommons</groupId>
+    			<artifactId>reportng</artifactId>
+    			<version>1.1.4</version>
+    			<scope>test</scope>
+		</dependency>
+		
+		<dependency>
+    			<groupId>com.google.inject</groupId>
+    			<artifactId>guice</artifactId>
+    			<version>3.0</version>
+		</dependency>
+		
+		<dependency>
+    			<groupId>velocity</groupId>
+    			<artifactId>velocity-dep</artifactId>
+    			<version>1.4</version>
 		</dependency>
 		
 		
-
+		<!-- The next dependency is for running script in IOS Driver -->
+		<dependency>
+    			<groupId>io.appium</groupId>
+    			<artifactId>java-client</artifactId>
+    			<version>4.1.2</version>
+		</dependency>
+		
+		
+		<dependency>
+    			<groupId>org.seleniumhq.selenium</groupId>
+    			<artifactId>selenium-server</artifactId>
+    			<version>3.4.0</version>
+		</dependency>
+		
 		
 		
 	</dependencies>

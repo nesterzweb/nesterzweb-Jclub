@@ -4,6 +4,8 @@ package org.jclub.coreclasses;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,15 +15,19 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.UnexpectedAlertBehaviour;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+
+import io.appium.java_client.ios.IOSDriver;
 
 
 
@@ -32,7 +38,12 @@ public class browserintialization {
 				private WebDriver driver;
 				
 				String APPLICATION_URL;
+				
+				int Seconds = 10; 
 		
+				Actions build ;
+				
+				IOSDriver iosdriver;
 
 			public void openbrowsers(){
 				
@@ -41,7 +52,7 @@ public class browserintialization {
 			if (("ChromeDriver").equals("ChromeDriver"))
 			{
 				
-				System.setProperty("webdriver.chrome.driver", "E://Portico_Framework//portico-qa-libs//src//main//resources//Drivers//chromedriver.exe");
+				System.setProperty("webdriver.chrome.driver", "//Users//jay//Desktop//Automation Project Stuff//chromedriver");
 
 				Map<String, Object> prefs = new HashMap<String, Object>();
 				prefs.put("profile.content_settings.pattern_pairs.*.multiple-automatic-downloads", 1);
@@ -50,16 +61,17 @@ public class browserintialization {
 
 				ChromeOptions options = new ChromeOptions();
 				options.setExperimentalOption("prefs", prefs);
-				options.addArguments("--disable -extensions");
-				options.addArguments("--start-maximized");
+				options.addArguments("disable -extensions");
+				//options.addArguments("--kiosk");
 				options.addArguments("disable-infobars");
 				options.setExperimentalOption("prefs", prefs);
 
 				DesiredCapabilities capabilities = DesiredCapabilities.chrome();
-				capabilities.setCapability("chrome.binary", "E://Portico_Framework//portico-qa-libs//src//main//resources//Drivers//chromedriver.exe");
+				capabilities.setCapability("chrome.binary", "//Users//jay//Desktop//Automation Project Stuff//chromedriver");
 				capabilities.setCapability(CapabilityType.UNEXPECTED_ALERT_BEHAVIOUR, UnexpectedAlertBehaviour.ACCEPT);
 				capabilities.setCapability(ChromeOptions.CAPABILITY, options);
 				driver = 	new ChromeDriver(capabilities);
+				build = new Actions(driver);
 				
 		
 			}
@@ -78,15 +90,36 @@ public class browserintialization {
 				
 			}
 
-			public void click(By by){
+
+			
+			public void click(By by) throws IOException
+			{
 				
-				getHighlightElement(driver.findElement(by));
-				driver.findElement(by).click();
+				try
+				{					
+					WebElement element = driver.findElement(by);
+					getHighlightElement(element);
+					timeinterval(1);
+					build.moveToElement(element).click().perform();
+				
+					
+				}
+				catch (NoSuchElementException e)
+				{
+					driver.findElement(by).click();
+				}
+				catch (Exception e)
+				{
+					Assert.assertTrue(false, "Fail to click on link : " + by + " on page : " + e.getMessage());
+					//rootLogger.warn("Fail to click on link : " + by + " on page : " + selenium.getWrappedDriver().getCurrentUrl());
+				}
 			}
+			
+			
 				public void click(WebElement  element){
 				
 				getHighlightElement(element);
-				element.click();
+				build.moveToElement(element).click().perform();
 			}
 			public void sendkeys(By by,String keys){
 				getHighlightElement(driver.findElement(by));
@@ -95,7 +128,7 @@ public class browserintialization {
 			
 			public void timeinterval(int i) throws InterruptedException{
 				
-				Thread.sleep(5000 * i );
+				Thread.sleep(1000 * i );
 				
 			}
 			
@@ -122,16 +155,17 @@ public class browserintialization {
 				}
 			}
 			
-			public boolean isDisplayed(By by){
+			public boolean isDisplayed(By by) throws InterruptedException{
 				
+				timeinterval(1);
 				getHighlightElement(driver.findElement(by));
 				return driver.findElement(by).isDisplayed();
 				
 			}
 			
-			public String getText(By by) throws IOException
+			public String getText(By by) throws IOException, InterruptedException
 			{
-				//waitForParticularElement(by, Seconds);
+				waitForParticularElement(by, Seconds);
 				try
 				{
 					getHighlightElement(driver.findElement(by));
@@ -171,23 +205,89 @@ public class browserintialization {
 				}
 				catch (NoSuchElementException e)
 				{
-					try
-					{
-						WebElement element = driver.findElement(by);
-						getHighlightElement(element);
-						((JavascriptExecutor) driver).executeScript("window.scrollTo(" + element.getLocation().x + "," + element.getLocation().y + ")");
-						((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
-						return driver.findElement(by).getAttribute(attribute).trim();
-					}
-					catch (Exception e2)
-					{
-						// logger.info(e.getMessage());
-						Assert.assertTrue(false, "Fail to get text value from : " + by + " on page : " + e.getMessage());
-					}
+					
 				}
 				return null;
 			}
 			
+			public void waitForParticularElement(final By element, int waitForSeconds) throws IOException, InterruptedException
+			{
+				int i = 1;
+				do
+				{
+					try
+					{
+						driver.findElement(element).isDisplayed();
+						timeinterval(1);
+						break;
+					}
+					catch (Exception e)
+					{
+						timeinterval(1);
+						i++;
+						System.out.println("waiting for element : " + element.toString() + " :  Waiting Time [ " + i + " ] out of " + waitForSeconds);
+					}
+				}
+				while (i <= waitForSeconds);
+			}
+			
+			public String getTextRuntime(By by) throws IOException, InterruptedException
+			{
+				timeinterval(1);
+				try
+				{
+					moveToElement(by);
+					return driver.findElement(by).getText().trim();
+				}
+				catch (NoSuchElementException e)
+				{
+				//	rootLogger.warn("Fail to get text value from : " + by + " on page : " + e.getMessage());
+				}
+				catch (Exception e)
+				{
+				//	rootLogger.warn("Fail to get text value from : " + by + " on page : " + e.getMessage());
+				}
+				return "";
+			}
+			
+			public void moveToElement(WebElement element) throws IOException
+			{
+
+				try
+				{
+					getHighlightElement(element);
+					build.moveToElement(element).build().perform();
+				}
+				catch (NoSuchElementException e)
+				{
+					//Assert.assertTrue(false, "Fail to find Element: " + element + " on page : " + detectPage());
+				}
+				catch (Exception e)
+				{
+					//rootLogger.warn("Fail to find Element: " + element + " on page : " + detectPage());
+				}
+			}
+			
+			public void moveToElement(By by) throws IOException
+			{
+				WebElement element;
+
+				try
+				{
+					element = driver.findElement(by);
+					getHighlightElement(driver.findElement(by));
+					build.moveToElement(element).build().perform();
+				}
+				catch (NoSuchElementException e)
+				{
+					//rootLogger.warn("Fail to find Element: " + by + " on page : " + detectPage());
+				}
+				catch (Exception e)
+				{
+					//rootLogger.warn("Fail to find Element: " + by + " on page : " + detectPage());
+				}
+			}
+				
 	}
 	
 	

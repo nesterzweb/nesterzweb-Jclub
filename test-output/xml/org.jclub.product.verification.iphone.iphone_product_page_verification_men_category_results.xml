@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="men category products testing"
+           tests="1"
+           failures="0"
+           errors="0"
+           skipped="0"
+           time="484.788">
+  <properties />
+  
+  
+            <testcase name="startsafari" time="484.788" classname="org.jclub.product.verification.iphone.iphone_product_page_verification_men_category" />
+      
+</testsuite>
