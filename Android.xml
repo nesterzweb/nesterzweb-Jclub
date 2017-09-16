@@ -15,47 +15,47 @@
 			</test>
 			
 				
-			<test name="bestseller category products testing">
-				<classes>
-					<class name="org.jclub.product.verification.android.android_product_page_verification_bestseller_category" />
-				</classes>
-			</test>
+<!-- 			<test name="bestseller category products testing"> -->
+<!-- 				<classes> -->
+<!-- 					<class name="org.jclub.product.verification.android.android_product_page_verification_bestseller_category" /> -->
+<!-- 				</classes> -->
+<!-- 			</test> -->
 			
-			<test name="electronics category products testing">
-				<classes>
-					<class name="org.jclub.product.verification.android.android_product_page_verification_electronics_category" />
-				</classes>
-			</test>
+<!-- 			<test name="electronics category products testing"> -->
+<!-- 				<classes> -->
+<!-- 					<class name="org.jclub.product.verification.android.android_product_page_verification_electronics_category" /> -->
+<!-- 				</classes> -->
+<!-- 			</test> -->
 			
-			<test name="home category products testing">
-				<classes>
-					<class name="org.jclub.product.verification.android.android_product_page_verification_home_category" />
-				</classes>
-			</test>
+<!-- 			<test name="home category products testing"> -->
+<!-- 				<classes> -->
+<!-- 					<class name="org.jclub.product.verification.android.android_product_page_verification_home_category" /> -->
+<!-- 				</classes> -->
+<!-- 			</test> -->
 			
-			<test name="jewelry category products testing">
-				<classes>
-					<class name="org.jclub.product.verification.android.android_product_page_verification_jewelry_category" />
-				</classes>
-			</test>
+<!-- 			<test name="jewelry category products testing"> -->
+<!-- 				<classes> -->
+<!-- 					<class name="org.jclub.product.verification.android.android_product_page_verification_jewelry_category" /> -->
+<!-- 				</classes> -->
+<!-- 			</test> -->
 			
-			<test name="lifestyle category products testing">
-				<classes>
-					<class name="org.jclub.product.verification.android.android_product_page_verification_lifestyle_category" />
-				</classes>
-			</test>
+<!-- 			<test name="lifestyle category products testing"> -->
+<!-- 				<classes> -->
+<!-- 					<class name="org.jclub.product.verification.android.android_product_page_verification_lifestyle_category" /> -->
+<!-- 				</classes> -->
+<!-- 			</test> -->
 			
-			<test name="men category products testing">
-				<classes>
-					<class name="org.jclub.product.verification.android.android_product_page_verification_men_category" />
-				</classes>
-			</test>
+<!-- 			<test name="men category products testing"> -->
+<!-- 				<classes> -->
+<!-- 					<class name="org.jclub.product.verification.android.android_product_page_verification_men_category" /> -->
+<!-- 				</classes> -->
+<!-- 			</test> -->
 			
-			<test name="women category products testing">
-				<classes>
-					<class name="org.jclub.product.verification.android.android_product_page_verification_women_category" />
-				</classes>
-			</test>
+<!-- 			<test name="women category products testing"> -->
+<!-- 				<classes> -->
+<!-- 					<class name="org.jclub.product.verification.android.android_product_page_verification_women_category" /> -->
+<!-- 				</classes> -->
+<!-- 			</test> -->
 		
 	</suite>
 

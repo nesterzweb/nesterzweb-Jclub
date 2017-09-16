@@ -2,20 +2,20 @@ package org.jclub.coreclasses;
 
 
 
-import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.StringTokenizer;
 
+import org.apache.log4j.Logger;
+
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.UnexpectedAlertBehaviour;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -27,13 +27,17 @@ import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
-import io.appium.java_client.ios.IOSDriver;
+import org.testng.asserts.SoftAssert;
 
 
 
 
 public class browserintialization {
 
+	
+	private static Logger Log = Logger.getLogger(browserintialization.class.getName());
+	
+	SoftAssert softAsserttion = new SoftAssert();
 	
 				private WebDriver driver;
 				
@@ -42,8 +46,8 @@ public class browserintialization {
 				int Seconds = 10; 
 		
 				Actions build ;
+				Alert alert;
 				
-				IOSDriver iosdriver;
 
 			public void openbrowsers(){
 				
@@ -72,7 +76,7 @@ public class browserintialization {
 				capabilities.setCapability(ChromeOptions.CAPABILITY, options);
 				driver = 	new ChromeDriver(capabilities);
 				build = new Actions(driver);
-				
+		
 		
 			}
 			}
@@ -189,7 +193,7 @@ public class browserintialization {
 				return driver.getCurrentUrl();
 			}
 			
-			public List getelementlist(By by){
+			public List<WebElement> getelementlist(By by){
 			
 				List <WebElement> product = driver.findElements(by);
 				return product;		
@@ -287,7 +291,178 @@ public class browserintialization {
 					//rootLogger.warn("Fail to find Element: " + by + " on page : " + detectPage());
 				}
 			}
+			
+  //------------------------------------------------------------------- Product Testing related method-------------------------------------------------------------------//
+			
+			public boolean verify_video_firstpage() throws IOException, InterruptedException{
+				return isDisplayed(By.xpath(".//*[@id='video-modal']//div[@class='modal-body']"));
+			}
+			
+			public void Close_video_popup() throws IOException{
+				click(By.xpath(".//*[@id='video-modal']//button[@class='close']"));
+			}
 				
+			public void dologin() throws IOException{
+				click(By.xpath(".//li//a[@class='bold' and @title='Login']"));
+				sendkeys(By.xpath(".//*[@id='customer_email']"), "vivekparmar37@gmail.com");
+				sendkeys(By.xpath(".//*[@id='customer_password']"), "9623007654");
+				click(By.xpath(".//*[@id='new_customer']//input[@type='submit']"));
+			}
+			
+			public boolean verify_signin_success() throws IOException, InterruptedException{
+				String s= getText(By.xpath("//div[@class='alert alert-success']"));
+				Log.info(s);
+				return isDisplayed(By.xpath("//div[@class='alert alert-success']"));
+			}
+			
+			public void click_on_category(String category) throws IOException{
+				
+				click(By.xpath("//a[text()='"+category+"']"));
+			}
+			
+			public void product_attribute_verifiction(String Category) throws IOException, InterruptedException{
+				
+				int i = 0;
+				List <WebElement> products = getelementlist(By.xpath(".//*[@id='product-list']//a"));
+				
+				Log.info("=====================================================================");
+				Log.info("Numbers of Products in" +Category+" category="+products.size());
+				Log.info("=====================================================================");
+				
+				Reporter.log("=====================================================================");
+				Reporter.log("Numbers of Products in "+Category+" category : ="+products.size());
+				Reporter.log("=====================================================================");
+				
+				for (WebElement product:products ){
+				
+					i++;
+								
+					String product_class_name = product.getAttribute("class");
+
+					if(!product_class_name.contains("sold-out")){
+						
+						Log.info("=====================================================================");
+						Log.info("======================== Product :="+i+"==========================");
+						Log.info("=====================================================================");
+						
+						Reporter.log("=====================================================================");
+						Reporter.log("======================== Product :="+i+"==========================");
+						Reporter.log("=====================================================================");
+					
+					timeinterval(1);	
+					click(product);
+					
+					if(isDisplayed(By.id("product-modal-body"))) {
+					
+					String product_name = getTextRuntime(By.id("product-name"));
+					Log.info("Product Name := "+product_name);
+					Reporter.log("Product Name := "+product_name);
+					
+					String product_price_jclub = getTextRuntime(By.xpath(".//*[@id='product-price']"));
+					Log.info("Product Sell Price : = "+product_price_jclub);
+					Reporter.log("Product Sell Price : = "+product_price_jclub);
+					
+					String product_price_retail = getTextRuntime(By.xpath(".//*[@id='product-retail']"));
+					Log.info("Product Price : = "+product_price_retail);
+					Reporter.log("Product Price : = "+product_price_retail);
+					
+					
+					StringTokenizer jp =  new StringTokenizer(product_price_jclub);
+					String jclubprice = jp.nextToken("$");
+					float jcp = Float.parseFloat(jclubprice);
+					
+					StringTokenizer rp =  new StringTokenizer(product_price_retail);
+					String retailprice = rp.nextToken("$");
+					float rep =  Float.parseFloat(retailprice);
+					
+					if(jcp<rep) {
+					
+						Log.info("Jclub price is less than retail price");
+						Reporter.log("Jclub price is less than retail price");
+					}else
+					{
+						String bugDescription = "jclub price is greater than retail price.";	
+						Reporter.log("<b> <font color='red' size='2'>BUG DESCRIPTION :" + bugDescription + "</font></b>");
+						Log.info("jclub price is greater than retail price");
+						
+						softAsserttion.assertTrue(false);					
+					}
+					
+					String image_url = getAttribute(By.id("product-image"), "src");
+					Log.info("Product Image URL : = "+image_url);
+					Reporter.log("Product Image URL : = "+image_url);
+					
+					String product_saving_percentile = getTextRuntime(By.xpath(".//*[@id='product-savings']"));
+					Log.info("Product discount percentage := "+product_saving_percentile);
+					Reporter.log("Product discount percentage := "+product_saving_percentile);
+					
+					StringTokenizer psp =  new StringTokenizer(product_saving_percentile);
+					String savingpercentile = psp.nextToken("%");
+					int sav_pep =  Integer.parseInt(savingpercentile);
+					
+					float cal_saving_percentile = (jcp * 100)/rep;
+					
+					int cal_sav = Math.round(cal_saving_percentile);
+					
+					if(sav_pep!=(100-cal_sav)) {
+						
+						String bugDescription = "Wrong saving percentile display.";
+						Reporter.log("<b> <font color='red' size='2'>BUG DESCRIPTION :" + bugDescription + "</font></b>");
+						Log.info("Wrong saving percentile display");
+						softAsserttion.assertTrue(false);		
+					}
+					
+					String product_description = getTextRuntime(By.id("description-tab"));
+					Log.info("Product description := "+product_description);
+					Reporter.log("Product description := "+product_description);
+					
+					click(By.xpath(".//*[@id='pdp-modal']//button[@class='close']"));
+					
+					}
+					
+					}
+					else {
+						Log.info("=====================================================================");
+						Log.info("======================== Product :="+i+"==========================");
+						Log.info("=====================================================================");
+						
+						Reporter.log("=====================================================================");
+						Reporter.log("======================== Product :="+i+"==========================");
+						Reporter.log("=====================================================================");
+						Reporter.log("");
+						Reporter.log("");
+						Log.info("Sold out product  so URL not able to open");
+						String soldout = "Sold out product  so URL not able to open";
+						Reporter.log("<b> <font color='black' size='2'>Scenario Name : " + soldout + "</font></b>");
+						
+					}
+						
+				}
+				softAsserttion.assertAll();
+			}
+			
+			public void clearCartProduct() throws IOException, InterruptedException {
+				
+				click(By.id("open-cart"));
+				
+				if(isDisplayed(By.id("cart-modal-content"))) {
+			
+					List <WebElement> productsincart = getelementlist(By.xpath("//button[@class='item-remover btn-clear']"));
+		
+					for (WebElement product:productsincart ){
+					   
+						click(product);
+					
+					 Alert alert = driver.switchTo().alert();
+					 
+					 alert.accept();
+
+				
+			}
+			
+		}
+				click(By.xpath("(//button[@class='close'])[1]"));
+	}
 	}
 	
 	

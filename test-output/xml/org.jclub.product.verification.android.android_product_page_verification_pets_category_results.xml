@@ -4,9 +4,9 @@
            failures="1"
            errors="0"
            skipped="0"
-           time="525.440">
+           time="555.864">
   <properties />
-            <testcase name="productverificationforandroid" time="525.440" classname="org.jclub.product.verification.android.android_product_page_verification_pets_category">
+            <testcase name="productverificationforandroid" time="555.864" classname="org.jclub.product.verification.android.android_product_page_verification_pets_category">
                 <failure type="java.lang.AssertionError"
                   message="The following asserts failed:
 	expected [true] but found [false]"
@@ -14,8 +14,8 @@
 <![CDATA[java.lang.AssertionError: The following asserts failed:
 	expected [true] but found [false]
   org.testng.asserts.SoftAssert.assertAll(SoftAssert.java:43)
-  org.jclub.product.verification.android.android_product_page_verification_pets_category.product_attribute_verifiction(android_product_page_verification_pets_category.java:183)
-  org.jclub.product.verification.android.android_product_page_verification_pets_category.productverificationforandroid(android_product_page_verification_pets_category.java:87)
+  org.jclub.coreclasses.androidchromeintialization.product_attribute_verifiction(androidchromeintialization.java:361)
+  org.jclub.product.verification.android.android_product_page_verification_pets_category.productverificationforandroid(android_product_page_verification_pets_category.java:78)
   sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
   sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
   sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)

@@ -3,7 +3,9 @@ package org.jclub.coreclasses;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
+import java.util.StringTokenizer;
 
+import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
@@ -17,6 +19,7 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
 
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.remote.MobileCapabilityType;
@@ -27,6 +30,10 @@ public class androidchromeintialization {
 	String APPLICATION_URL;
 	int Seconds = 10; 
 	Actions build ;
+	
+	private static Logger Log = Logger.getLogger(androidchromeintialization.class.getName());
+	
+	SoftAssert softAsserttion = new SoftAssert();
 	
 	public void startandroidchrome() throws IOException {
 		
@@ -258,6 +265,101 @@ public class androidchromeintialization {
 	}
 	
 	
+	//------------------------------------------------------------------- Product Testing related method-------------------------------------------------------------------//
 	
+	public boolean verify_video_firstpage() throws IOException, InterruptedException{
+		return isDisplayed(By.xpath(".//*[@id='video-modal']//div[@class='modal-body']"));
+	}
+
+	public void Close_video_popup() throws IOException{
+		click(By.xpath(".//div[@class='modal fade in']//a[@class='close-bottom']//i[@class='icon-cross']"));
+	}
+
+	public void dologin() throws IOException{
+		click(By.xpath(".//li//a[@class='bold' and @title='Login']//i[@class='icon-user']"));
+		sendkeys(By.xpath(".//*[@id='customer_email']"), "vivekparmar37@gmail.com");
+		sendkeys(By.xpath(".//*[@id='customer_password']"), "9623007654");
+		click(By.xpath(".//*[@id='new_customer']//input[@type='submit']"));
+	}
+
+	public boolean verify_signin_success() throws IOException, InterruptedException{
+		String s= getText(By.xpath("//div[@class='alert alert-success']"));
+		Log.info(s);
+		return isDisplayed(By.xpath("//div[@class='alert alert-success']"));
+	}
+
+	public void click_on_category(String category) throws IOException{
+		
+		click(By.xpath(".//span[text()='Shop by Category']"));
+		click(By.xpath(".//li//a[text()='"+category+"']"));
+	}
+
+	public void product_attribute_verifiction(String Category) throws IOException, InterruptedException{
+		
+		int i = 0;
+		List <WebElement> products = getelementlist(By.xpath(".//*[@id='product-list']//a"));
+		
+		Log.info("=====================================================================");
+		Log.info("Numbers of Products in "+ Category+" category="+products.size());
+		Log.info("=====================================================================");
+		
+		Reporter.log("=====================================================================");
+		Reporter.log("Numbers of Products in "+Category+" category : ="+products.size());
+		Reporter.log("=====================================================================");
+		
+		for (WebElement product:products ){
+		
+					i++;
+					
+				Log.info("=====================================================================");
+				Log.info("======================== Product :="+i+"==========================");
+				Log.info("=====================================================================");
+				
+				Reporter.log("=====================================================================");
+				Reporter.log("======================== Product :="+i+"==========================");
+				Reporter.log("=====================================================================");
+			
+			String product_name = getTextRuntime(By.xpath(".//*[@id='product-list']//a["+i+"]//h5"));
+			Log.info("Product Name := "+product_name);
+			Reporter.log("Product Name := "+product_name);
+			
+			String product_price_jclub = getTextRuntime(By.xpath(".//*[@id='product-list']//a["+i+"]//strong"));
+			Log.info("Product Sell Price : = "+product_price_jclub);
+			Reporter.log("Product Sell Price : = "+product_price_jclub);
+			
+			String product_price_retail = getTextRuntime(By.xpath(".//*[@id='product-list']//a["+i+"]//del"));
+			Log.info("Product Price : = "+product_price_retail);
+			Reporter.log("Product Price : = "+product_price_retail);
+			
+			
+			StringTokenizer jp =  new StringTokenizer(product_price_jclub);
+			String jclubprice = jp.nextToken("$");
+			float jcp = Float.parseFloat(jclubprice);
+			
+			StringTokenizer rp =  new StringTokenizer(product_price_retail);
+			String retailprice = rp.nextToken("$");
+			float rep =  Float.parseFloat(retailprice);
+			
+			if(jcp<rep) {
+				Log.info("Jclub price is less then retail price");
+				Reporter.log("Jclub price is less then retail price");
+
+			}else
+			{
+				String bugDescription = "jclub price is greater than retail price.";	
+				Reporter.log("<b> <font color='red' size='2'>BUG DESCRIPTION :" + bugDescription + "</font></b>");
+				Log.info("jclub price is greter then retail price");
+				
+				softAsserttion.assertTrue(false);					
+			}
+			
+			String product_saving_percentile = getTextRuntime(By.xpath(".//*[@id='product-list']//a["+i+"]//em"));
+			Log.info("Product discount percentage := "+product_saving_percentile);
+			Reporter.log("Product discount percentage := "+product_saving_percentile);
+			
+		}
+		softAsserttion.assertAll();
+				
+		}
 	
 }

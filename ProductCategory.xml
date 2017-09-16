@@ -14,47 +14,47 @@
 				</classes>
 			</test>
 			
-			<test name="bestsellers category products testing">
-				<classes>
-					<class name="org.jclub.product.verification.web.product_page_verifcation_bestseller_category" />
-				</classes>
-			</test>
+<!-- 			<test name="bestsellers category products testing"> -->
+<!-- 				<classes> -->
+<!-- 					<class name="org.jclub.product.verification.web.product_page_verifcation_bestseller_category" /> -->
+<!-- 				</classes> -->
+<!-- 			</test> -->
 			
-			<test name="electronics category products testing">
-				<classes>
-					<class name="org.jclub.product.verification.web.product_page_verifcation_electronics_category" />
-				</classes>
-			</test>
+<!-- 			<test name="electronics category products testing"> -->
+<!-- 				<classes> -->
+<!-- 					<class name="org.jclub.product.verification.web.product_page_verifcation_electronics_category" /> -->
+<!-- 				</classes> -->
+<!-- 			</test> -->
 			
-			<test name="home category products testing">
-				<classes>
-					<class name="org.jclub.product.verification.web.product_page_verifcation_home_category" />
-				</classes>
-			</test>
+<!-- 			<test name="home category products testing"> -->
+<!-- 				<classes> -->
+<!-- 					<class name="org.jclub.product.verification.web.product_page_verifcation_home_category" /> -->
+<!-- 				</classes> -->
+<!-- 			</test> -->
 			
-			<test name="jewelry category products testing">
-				<classes>
-					<class name="org.jclub.product.verification.web.product_page_verifcation_jewelry_category" />
-				</classes>
-			</test>
+<!-- 			<test name="jewelry category products testing"> -->
+<!-- 				<classes> -->
+<!-- 					<class name="org.jclub.product.verification.web.product_page_verifcation_jewelry_category" /> -->
+<!-- 				</classes> -->
+<!-- 			</test> -->
 			
-			<test name="lifestyle category products testing">
-				<classes>
-					<class name="org.jclub.product.verification.web.product_page_verifcation_lifestyle_category" />
-				</classes>
-			</test>
+<!-- 			<test name="lifestyle category products testing"> -->
+<!-- 				<classes> -->
+<!-- 					<class name="org.jclub.product.verification.web.product_page_verifcation_lifestyle_category" /> -->
+<!-- 				</classes> -->
+<!-- 			</test> -->
 			
-			<test name="men category products testing">
-				<classes>
-					<class name="org.jclub.product.verification.web.product_page_verifcation_en_category" />
-				</classes>
-			</test>
+<!-- 			<test name="men category products testing"> -->
+<!-- 				<classes> -->
+<!-- 					<class name="org.jclub.product.verification.web.product_page_verifcation_men_category" /> -->
+<!-- 				</classes> -->
+<!-- 			</test> -->
 
 			
-			<test name="women category products testing">
-				<classes>
-					<class name="org.jclub.product.verification.web.product_page_verifcation_women_category" />
-				</classes>
-			</test>
+<!-- 			<test name="women category products testing"> -->
+<!-- 				<classes> -->
+<!-- 					<class name="org.jclub.product.verification.web.product_page_verifcation_women_category" /> -->
+<!-- 				</classes> -->
+<!-- 			</test> -->
 	</suite>
 
