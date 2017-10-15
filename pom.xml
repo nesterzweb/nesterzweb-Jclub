@@ -6,7 +6,58 @@
   <name>jclub-gui-automation</name>
   <description>This project is for GUI automation of Jclub</description>
   
-  
+  <properties>
+  	<timestamp>${maven.build.timestamp}</timestamp>
+   <maven.build.timestamp.format>yyyy-MM-dd_HH-mm-ss</maven.build.timestamp.format>
+		<jre.level>1.8</jre.level>
+		<jdk.level>1.8</jdk.level>
+	</properties>
+
+	<build>	 
+
+		<plugins>
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.5.1</version>
+            <configuration>
+                <source>1.8</source>
+                <target>1.8</target>
+            </configuration>
+        </plugin>
+
+
+			<!-- Below plug-in is used to execute tests -->
+	
+	
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.18.1</version>
+				<configuration>
+				<reportsDirectory>C:/Users/DIVYA/git/nesterzweb-Jclub/target/${maven.build.timestamp}</reportsDirectory>
+					<suiteXmlFiles>
+						<!-- TestNG suite XML files -->
+						<suiteXmlFile>ProductCategory.xml</suiteXmlFile>
+					</suiteXmlFiles>
+				</configuration>
+			</plugin>
+			
+		
+			 <plugin>
+       			 <groupId>org.apache.maven.plugins</groupId>
+        		 <artifactId>maven-site-plugin</artifactId>
+        		 <version>2.1</version>
+        		 <configuration>
+          			<reportsDirectory>C:/Users/DIVYA/git/nesterzweb-Jclub/target/${maven.build.timestamp}</reportsDirectory>
+        		 </configuration>
+      		</plugin>
+			
+			
+		</plugins>
+
+		
+	</build>
   
   <dependencies>
 
@@ -38,7 +89,6 @@
     			<groupId>org.testng</groupId>
     			<artifactId>testng</artifactId>
     			<version>6.11</version>
-    			<scope>test</scope>
 		</dependency>
 		
 		<!-- The next dependency is for log the output in loggger file -->
@@ -54,7 +104,6 @@
     			<groupId>org.uncommons</groupId>
     			<artifactId>reportng</artifactId>
     			<version>1.1.4</version>
-    			<scope>test</scope>
 		</dependency>
 		
 		<dependency>
