@@ -35,7 +35,7 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>2.18.1</version>
 				<configuration>
-				<reportsDirectory>C:/Users/DIVYA/git/nesterzweb-Jclub/target/${maven.build.timestamp}</reportsDirectory>
+				<reportsDirectory>/Users/jay/Desktop/nesterzweb-Jclub/target/${maven.build.timestamp}</reportsDirectory>
 					<suiteXmlFiles>
 						<!-- TestNG suite XML files -->
 						<suiteXmlFile>ProductCategory.xml</suiteXmlFile>
