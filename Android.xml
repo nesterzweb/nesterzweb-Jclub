@@ -15,11 +15,11 @@
 			</test>
 			
 				
-<!-- 			<test name="bestseller category products testing"> -->
-<!-- 				<classes> -->
-<!-- 					<class name="org.jclub.product.verification.android.android_product_page_verification_bestseller_category" /> -->
-<!-- 				</classes> -->
-<!-- 			</test> -->
+<test name="bestseller category products testing">
+<classes>
+<class name="org.jclub.product.verification.android.android_product_page_verification_bestseller_category" />
+</classes>
+</test>
 			
 <!-- 			<test name="electronics category products testing"> -->
 <!-- 				<classes> -->
